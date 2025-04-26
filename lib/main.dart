@@ -284,12 +284,82 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
     }
   }
 
+  void _showAboutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Image.asset('assets/batman_icon.png', width: 24, height: 24),
+              const SizedBox(width: 8),
+              const Text('About Batman'),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Batman Batch File Manager v0.0.1'),
+              const SizedBox(height: 16),
+              const Text('© 2023-2024 All rights reserved.'),
+              const SizedBox(height: 8),
+              const Text('Contact us:'),
+              SelectableText(
+                'jaewgwon@gmail.com',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+            TextButton(
+              onPressed: () {
+                showLicensePage(
+                  context: context,
+                  applicationName: 'Batman',
+                  applicationVersion: '0.0.1',
+                  applicationIcon: Image.asset(
+                    'assets/batman_icon.png',
+                    width: 48,
+                    height: 48,
+                  ),
+                );
+              },
+              child: const Text('View Licenses'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: GestureDetector(
+          onTap: () {
+            _showAboutDialog();
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/batman_icon.png', width: 32, height: 32),
+              const SizedBox(width: 8),
+              Text(widget.title),
+            ],
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
