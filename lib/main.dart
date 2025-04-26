@@ -302,7 +302,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
             children: [
               const Text('Batman Batch File Manager v0.0.1'),
               const SizedBox(height: 16),
-              const Text('© 2023-2024 All rights reserved.'),
+              const Text('© 2025 All rights reserved.'),
               const SizedBox(height: 8),
               const Text('Contact us:'),
               SelectableText(
