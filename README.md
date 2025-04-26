@@ -51,6 +51,9 @@ To run tests:
 flutter test
 ```
 
+### License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 [Back to top ↑](#batman---batch-manager-)
 
 ---
@@ -100,6 +103,9 @@ Batman은 Windows 전용 배치 파일 관리자로, 배치 파일을 쉽게 관
 flutter test
 ```
 
+### 라이센스
+이 프로젝트는 MIT 라이센스에 따라 라이센스가 부여됩니다 - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+
 [맨 위로 ↑](#batman---batch-manager-)
 
 ---
@@ -148,5 +154,8 @@ Batmanは、Windowsのみのバッチファイル管理ツールであり、バ�
 ```
 flutter test
 ```
+
+### ライセンス
+このプロジェクトはMITライセンスの下でライセンスされています - 詳細は[LICENSE](LICENSE)ファイルをご覧ください。
 
 [トップに戻る ↑](#batman---batch-manager-)
