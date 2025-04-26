@@ -20,16 +20,23 @@ Batman is a Windows-only batch file manager that allows you to easily manage, ru
 - **Persistent Storage**: Your batch file list is saved between sessions
 
 ### Installation
-1. Make sure you have Flutter installed on your system
-2. Clone this repository
-3. Install dependencies:
-   ```
-   flutter pub get
-   ```
-4. Run the application:
-   ```
-   flutter run -d windows
-   ```
+1. **Option 1: Using pre-built release (Recommended)**
+   - Download the latest release from [GitHub Releases](https://github.com/your-username/batman/releases)
+   - Extract the zip file to your preferred location
+   - Run `batman.exe` to start the application
+   - If you see a "Windows protected your PC" warning or "Unverified Publisher" message, click on "More info" and then "Run anyway" to proceed
+
+2. **Option 2: Building from source**
+   - Make sure you have Flutter installed on your system
+   - Clone this repository
+   - Install dependencies:
+     ```
+     flutter pub get
+     ```
+   - Run the application:
+     ```
+     flutter run -d windows
+     ```
 
 ### Usage
 1. Click the "+" button in the app bar to add batch files
@@ -72,16 +79,23 @@ Batman은 Windows 전용 배치 파일 관리자로, 배치 파일을 쉽게 관
 - **설정 저장**: 앱을 재시작해도 배치 파일 목록 유지
 
 ### 설치 방법
-1. Flutter가 시스템에 설치되어 있는지 확인
-2. 이 저장소 복제
-3. 의존성 설치:
-   ```
-   flutter pub get
-   ```
-4. 애플리케이션 실행:
-   ```
-   flutter run -d windows
-   ```
+1. **옵션 1: 빌드된 릴리스 사용 (권장)**
+   - [GitHub Releases](https://github.com/your-username/batman/releases)에서 최신 릴리스를 다운로드
+   - 원하는 위치에 zip 파일 압축 해제
+   - `batman.exe`를 실행하여 애플리케이션 시작
+   - "Windows가 PC를 보호했습니다" 경고 또는 "확인되지 않은 게시자" 메시지가 표시되면, "추가 정보"를 클릭한 다음 "실행"을 선택하여 계속 진행
+
+2. **옵션 2: 소스에서 빌드**
+   - Flutter가 시스템에 설치되어 있는지 확인
+   - 이 저장소 복제
+   - 의존성 설치:
+     ```
+     flutter pub get
+     ```
+   - 애플리케이션 실행:
+     ```
+     flutter run -d windows
+     ```
 
 ### 사용 방법
 1. 앱 바의 "+" 버튼을 클릭하여 배치 파일 추가
@@ -124,16 +138,23 @@ Batmanは、Windowsのみのバッチファイル管理ツールであり、バ�
 - **永続的な保存**: セッション間でバッチファイルリストを保存
 
 ### インストール方法
-1. システムにFlutterがインストールされていることを確認
-2. このリポジトリをクローン
-3. 依存関係をインストール:
-   ```
-   flutter pub get
-   ```
-4. アプリケーションを実行:
-   ```
-   flutter run -d windows
-   ```
+1. **オプション1：ビルド済みリリースを使用（推奨）**
+   - [GitHub Releases](https://github.com/your-username/batman/releases)から最新リリースをダウンロード
+   - 任意の場所にzipファイルを解凍
+   - `batman.exe`を実行してアプリケーションを起動
+   - 「Windowsによって PC が保護されました」警告または「確認されていない発行元」メッセージが表示される場合は、「詳細情報」をクリックしてから「実行」を選択して続行してください
+
+2. **オプション2：ソースからビルド**
+   - システムにFlutterがインストールされていることを確認
+   - このリポジトリをクローン
+   - 依存関係をインストール:
+     ```
+     flutter pub get
+     ```
+   - アプリケーションを実行:
+     ```
+     flutter run -d windows
+     ```
 
 ### 使用方法
 1. アプリバーの「+」ボタンをクリックしてバッチファイルを追加
