@@ -4,6 +4,8 @@
 
 <img src="assets/batman_logo.png" alt="Batman Logo" width="200"/>
 
+<img src="assets/screenshot_1.png" alt="Batman Screenshot" width="700"/>
+
 ---
 
 <a id="english"></a>
