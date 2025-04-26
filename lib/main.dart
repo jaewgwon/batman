@@ -12,7 +12,7 @@ void main() {
 
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     window_size.setWindowTitle('Batman');
-    window_size.setWindowMinSize(const Size(600, 400));
+    window_size.setWindowMinSize(const Size(600, 500));
     window_size.setWindowMaxSize(Size.infinite);
   }
 
@@ -30,6 +30,14 @@ class BatchManagerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.system,
       home: const BatchManagerHome(title: 'Batman: Batch File Manager'),
     );
   }
@@ -47,15 +55,26 @@ class BatchManagerHome extends StatefulWidget {
 class _BatchManagerHomeState extends State<BatchManagerHome> {
   final List<BatchFile> _batchFiles = [];
   static const String _storageKey = 'batch_files';
+  late Timer _uiUpdateTimer;
 
   @override
   void initState() {
     super.initState();
     _loadBatchFiles();
+
+    // UI 업데이트를 위한 타이머 설정 (1초마다 업데이트)
+    _uiUpdateTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted && _batchFiles.any((file) => file.isRunning)) {
+        setState(() {
+          // 실행 시간 업데이트를 위한 setState 호출
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
+    _uiUpdateTimer.cancel();
     for (var file in _batchFiles) {
       file.dispose();
     }
@@ -128,6 +147,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
       setState(() {
         batchFile.isRunning = true;
         batchFile.process = process;
+        batchFile.startTime = DateTime.now(); // 시작 시간 설정
       });
 
       batchFile.stdoutSubscription = process.stdout.listen((_) {});
@@ -139,6 +159,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
               setState(() {
                 batchFile.isRunning = false;
                 batchFile.process = null;
+                batchFile.startTime = null; // 종료 시 시작 시간 초기화
               });
               batchFile.stdoutSubscription?.cancel();
               batchFile.stderrSubscription?.cancel();
@@ -149,6 +170,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
               setState(() {
                 batchFile.isRunning = false;
                 batchFile.process = null;
+                batchFile.startTime = null; // 오류 발생 시 시작 시간 초기화
               });
               batchFile.stdoutSubscription?.cancel();
               batchFile.stderrSubscription?.cancel();
@@ -178,6 +200,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
     setState(() {
       batchFile.isRunning = false;
       batchFile.process = null;
+      batchFile.startTime = null; // 중지 시 시작 시간 초기화
     });
   }
 
@@ -188,6 +211,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
       if (batchFile.isRunning && mounted) {
         setState(() {
           batchFile.isRunning = false;
+          batchFile.startTime = null; // 프로세스 종료 시 시작 시간 초기화
         });
       }
       return;
@@ -200,6 +224,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
             setState(() {
               batchFile.isRunning = false;
               batchFile.process = null;
+              batchFile.startTime = null; // 종료 시 시작 시간 초기화
             });
             timer.cancel();
             batchFile.stdoutSubscription?.cancel();
@@ -212,6 +237,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
         setState(() {
           batchFile.isRunning = false;
           batchFile.process = null;
+          batchFile.startTime = null; // 예외 발생 시 시작 시간 초기화
         });
         timer.cancel();
         batchFile.stdoutSubscription?.cancel();
@@ -235,7 +261,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('실행할 배치 파일이 없습니다')));
+        ).showSnackBar(const SnackBar(content: Text('No batch files to run')));
       }
       return;
     }
@@ -252,9 +278,9 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
     }
 
     if (mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('$startedCount개 배치 파일 실행 시작')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Started $startedCount batch files')),
+      );
     }
   }
 
@@ -279,7 +305,7 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
           _batchFiles.isEmpty
               ? Center(
                 child: Text(
-                  '배치 파일을 추가해주세요.',
+                  'Please add batch files.',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               )
@@ -331,6 +357,20 @@ class _BatchManagerHomeState extends State<BatchManagerHome> {
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
+                                // 실행 시간 표시
+                                if (batchFile.isRunning &&
+                                    batchFile.startTime != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'Running for ${batchFile.getRunningTime()}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.green.shade700,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
